@@ -9,9 +9,10 @@ try:
     response.raise_for_status()  # 确保请求成功
 
     # 保存网页响应到文件
-    with open('response.html', 'w', encoding='utf-8') as file:
+    response_file_path = 'response.html'
+    with open(response_file_path, 'w', encoding='utf-8') as file:
         file.write(response.text)
-    print("网页响应已成功保存到 'response.html'")
+    print(f"网页响应已成功保存到 {response_file_path}")
 
     # 解析网页内容
     soup = BeautifulSoup(response.text, 'html.parser')
@@ -23,7 +24,7 @@ try:
     # 提取防屏蔽地址的示例
     defensive_address = None
     for a_tag in soup.find_all('a', href=True):
-        if '防屏蔽' in a_tag.text:  # 根据实际内容调整条件
+        if '防屏蔽' in a_tag.text:
             defensive_address = a_tag['href']
             break
 
