@@ -27,6 +27,16 @@ jobs:
       run: |
         python javbus.py  # 确保路径匹配实际脚本位置
 
+    - name: Commit response file to repository
+      run: |
+        git config --global user.name "github-actions"
+        git config --global user.email "github-actions@github.com"
+        git add response.html
+        git commit -m "Add response.html file"
+        git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
     - name: Upload response file
       uses: actions/upload-artifact@v3
       with:
