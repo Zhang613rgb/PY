@@ -23,16 +23,12 @@ jobs:
       run: |
         pip install requests beautifulsoup4
 
-    - name: Create directory for response file
-      run: |
-        mkdir -p web
-
     - name: Run Python script
       run: |
-        python /javbus.py  # 替换为实际脚本路径
+        python javbus.py  # 确保路径匹配实际脚本位置
 
     - name: Upload response file
       uses: actions/upload-artifact@v3
       with:
         name: response-file
-        path: /response.html  # 确保路径匹配实际保存的文件位置
+        path: response.html  # 确保路径匹配实际保存的文件位置
