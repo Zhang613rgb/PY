@@ -4,25 +4,35 @@ on:
   push:
     branches:
       - main
-  schedule:
-    - cron: '0 0 * * *'  # 每天午夜运行一次，可以根据需要调整
+  workflow_dispatch:
 
 jobs:
   run-script:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
+    - name: Checkout code
       uses: actions/checkout@v3
 
     - name: Set up Python
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@v4
       with:
-        python-version: '3.8'  # 可以根据需要调整 Python 版本
+        python-version: '3.8'  # 指定 Python 版本
 
     - name: Install dependencies
       run: |
         pip install requests beautifulsoup4
 
+    - name: Create directory for response file
+      run: |
+        mkdir -p web
+
     - name: Run Python script
-      run: python javbus.py  # 修改为你的脚本路径
+      run: |
+        python /javbus.py  # 替换为实际脚本路径
+
+    - name: Upload response file
+      uses: actions/upload-artifact@v3
+      with:
+        name: response-file
+        path: /response.html  # 确保路径匹配实际保存的文件位置
